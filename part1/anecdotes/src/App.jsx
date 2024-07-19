@@ -38,7 +38,22 @@ const App = () => {
       <p>has {votes[selected]} votes</p>
       <button onClick={randomNote}>Next Anecdote</button>
       <button onClick={addVote}>Vote</button>
+      <MostVoted anecdotes={anecdotes} votes={votes} />
     </div>
+  )
+}
+
+const MostVoted = ({anecdotes, votes}) => {
+  const maxValue = Math.max(...votes)
+  console.log(maxValue)
+  const maxPosition = votes.indexOf(maxValue)
+  console.log(maxPosition)
+  return (
+    <>
+    <h1>Anecdote with most votes</h1>
+    <p>{anecdotes[maxPosition]}</p>
+    <p>has {maxValue}</p>
+    </>
   )
 }
 
