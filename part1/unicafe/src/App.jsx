@@ -44,8 +44,7 @@ const App = () => {
       <p>
         all {total}
       </p>
-      <Average good={good} bad={bad} neutral={neutral} total={total} />
-      <Positive good={good} total={total} />
+      <Statistics good={good} bad={bad} neutral={neutral} total={total} />
     </div>
   )
 }
@@ -56,19 +55,16 @@ const Button = ({text, onClick}) => {
   )
 }
 
-const Average = ({good, bad, total}) => {
+const Statistics = ({good, bad, total}) => {
   return(
-    <p>
-      average {(good + (bad * -1))/ total}
-    </p>
-  )
-}
-
-const Positive = ({good, total}) => {
-  return (
-    <p>
-      Positive {(good / total) * 100}%
-    </p>
+    <>
+      <p>
+        average {(good + (bad * -1))/ total}
+      </p>
+      <p>
+        positive {(good / total) * 100}%
+      </p>
+    </>
   )
 }
 
