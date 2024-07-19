@@ -71,4 +71,5 @@ const Statistics = ({good, bad, total, neutral}) => {
   )
 }
 
+
 export default App
