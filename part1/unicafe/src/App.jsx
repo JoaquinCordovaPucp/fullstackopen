@@ -32,18 +32,6 @@ const App = () => {
       <Button text="neutral" onClick={handleNeutral} />
       <Button text="bad" onClick={handleBad } />
       <h1>statistics</h1>
-      <p>
-        good {good}
-      </p>
-      <p>
-        neutral {neutral}
-      </p>
-      <p>
-        bad {bad}
-      </p>
-      <p>
-        all {total}
-      </p>
       <Statistics good={good} bad={bad} neutral={neutral} total={total} />
     </div>
   )
@@ -55,9 +43,21 @@ const Button = ({text, onClick}) => {
   )
 }
 
-const Statistics = ({good, bad, total}) => {
+const Statistics = ({good, bad, total, neutral}) => {
   return(
     <>
+      <p>
+       good {good}
+      </p>
+      <p>
+        neutral {neutral}
+      </p>
+      <p>
+        bad {bad}
+      </p>
+      <p>
+        all {total}
+      </p>
       <p>
         average {(good + (bad * -1))/ total}
       </p>
