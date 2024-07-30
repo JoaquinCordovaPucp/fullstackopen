@@ -50,6 +50,14 @@ const App = () => {
     .then(person => setPersons(persons.concat(person)))
   } 
   } 
+
+  const eliminatePerson = (id) => {
+    personServices
+      .eliminate(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id))
+      })
+    }
   
 
 
@@ -60,7 +68,7 @@ const App = () => {
       <h3>add a new</h3>
       <PersonForm onSubmit={submitName} inputName={handleChangeName} inputPhone={handleChangePhone} valueName={newName} valuePhone={newPhone} />
       <h3>Numbers</h3>
-      <Persons personsToShow={personsToShow} />
+      <Persons personsToShow={personsToShow} eliminate={eliminatePerson}/>
     </div>
   )
 }
