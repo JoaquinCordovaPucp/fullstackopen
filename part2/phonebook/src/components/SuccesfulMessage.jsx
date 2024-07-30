@@ -1,11 +1,11 @@
 import "../styles.css"
 
-const SuccesfulMessage = ({message}) => {
+const SuccesfulMessage = ({message, type}) => {
     if(message === null){
         return null
     }
-
-    return <div className="succesfulMessage">{message}</div>
+    const messageClass = type === "error" ? "unsuccesfulMessage" : "succesfulMessage"
+    return <div className={messageClass}>{message}</div>
 }
 
 export default SuccesfulMessage

@@ -12,6 +12,7 @@ const App = () => {
   const [newPhone, setNewPhone] =useState('')
   const [searchName, setSearchName] = useState('')
   const [message, setMessage] = useState(null)
+  const [messageType, setMessageType] = useState("succesfull")
 
   useEffect(()=> {
     console.log("effect")
@@ -53,8 +54,14 @@ const App = () => {
           setPersons(persons.map(persona => 
             persona.id === person.id ? person : persona
           ))
+          setMessageType("succesfull")
           setMessage(`${person.name} was succesfully added`)
           setTimeout(()=> setMessage(null), 5000)
+        })
+        .catch(error => {
+          setMessageType("error")
+          setMessage(`Information of ${person.name} has already been removed from the server`)
+          setTimeout(() => setMessage(null), 5000)
         })
       }
     } else  {
@@ -62,6 +69,7 @@ const App = () => {
     .create(newPerson)
     .then(person => {
       setPersons(persons.concat(person))
+      setMessageType("succesfull")
       setMessage(`${person.name} was succesfully added`)
       setTimeout(()=> setMessage(null), 5000)
     })
@@ -81,7 +89,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <SuccesfulMessage message={message} />
+      <SuccesfulMessage message={message} type={messageType}/>
       <Filter onChange={handleSearchName} value={searchName} />
       <h3>add a new</h3>
       <PersonForm onSubmit={submitName} inputName={handleChangeName} inputPhone={handleChangePhone} valueName={newName} valuePhone={newPhone} />
