@@ -4,12 +4,14 @@ import PersonForm from './components/PersonForm.jsx'
 import Persons from './components/Persons.jsx'
 import axios from "axios"
 import personServices from "./services/persons.js"
+import SuccesfulMessage from './components/SuccesfulMessage.jsx'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] =useState('')
   const [searchName, setSearchName] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(()=> {
     console.log("effect")
@@ -47,14 +49,22 @@ const App = () => {
       if(window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)){
         personServices
         .update(person.id, newPerson)
-        .then(person => setPersons(persons.map(persona => 
-          persona.id === person.id ? person : persona
-        )))
+        .then(person => {
+          setPersons(persons.map(persona => 
+            persona.id === person.id ? person : persona
+          ))
+          setMessage(`${person.name} was succesfully added`)
+          setTimeout(()=> setMessage(null), 5000)
+        })
       }
     } else  {
     personServices
     .create(newPerson)
-    .then(person => setPersons(persons.concat(person)))
+    .then(person => {
+      setPersons(persons.concat(person))
+      setMessage(`${person.name} was succesfully added`)
+      setTimeout(()=> setMessage(null), 5000)
+    })
   } 
   } 
 
@@ -71,6 +81,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <SuccesfulMessage message={message} />
       <Filter onChange={handleSearchName} value={searchName} />
       <h3>add a new</h3>
       <PersonForm onSubmit={submitName} inputName={handleChangeName} inputPhone={handleChangePhone} valueName={newName} valuePhone={newPhone} />
