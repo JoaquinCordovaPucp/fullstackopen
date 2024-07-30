@@ -38,13 +38,20 @@ const App = () => {
 
   const submitName = (event) => {
     event.preventDefault()
-    if(persons.find(person => person.name === newName)){
-      window.alert(`${newName} is already added to phonebook`)
-    } else  {
     const newPerson = {
       name: newName,
       number: newPhone
     }
+    if(persons.find(person => person.name === newName)){
+      const person = persons.find(person => person.name === newName)
+      if(window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)){
+        personServices
+        .update(person.id, newPerson)
+        .then(person => setPersons(persons.map(persona => 
+          persona.id === person.id ? person : persona
+        )))
+      }
+    } else  {
     personServices
     .create(newPerson)
     .then(person => setPersons(persons.concat(person)))
