@@ -4,7 +4,6 @@ const Country = ({length, countryInfo}) => {
         const languages2 = languages.map(([perro, gato]) => gato)
         const languages3 = languages2.map(l => <li key={l}>{l}</li>)
         const flagURL = countryInfo.flags.png
-        console.log(countryInfo.flags.png)
         return(
             <>
             <h1>{countryInfo.name.common}</h1>

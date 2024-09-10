@@ -25,6 +25,7 @@ function App() {
       setLength(paisesCoinciden.length)
       if (paisesCoinciden.length <= 10 && paisesCoinciden.length > 0 && paisesCoinciden.length !== 1){
         setMatchCountries(paisesCoinciden)
+        setcountryInfo(resultados)
       }
       else if (paisesCoinciden.length === 1) {
         setcountryInfo(resultados[0])
@@ -40,7 +41,7 @@ function App() {
       <input type='text' onChange={handleChange} value={newCountry}></input>
     </form>
     <TooMany length={length} />
-    <MatchedCountries length={length} countries={matchCountries}/>
+    <MatchedCountries length={length} countries={matchCountries} countryInfo={countryInfo}/>
     <Country length={length} countryInfo={countryInfo} /> 
     </> 
   )
