@@ -1,9 +1,20 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 const MatchedCountries = ({length, countries, countryInfo}) => {
 
     const [index, setIndex] = useState(-1)
+    const [temp, setTemp] =useState(null)
+    useEffect(() => {
+        if (index !== -1) {
+            axios
+            .get(`https://api.openweathermap.org/data/2.5/weather?q=${countryInfo[index].capital[0]}&appid=178d5001f43d404b2b8fae03d977b820`)
+            .then((e) => {
+                console.log(e.data.main.temp)
+                setTemp(e.data.main.temp)
+            })
+        }
+    }, [index, countryInfo])
 
     if( index === -1) {
         if (length > 10 || length === 1 ||   length === 0) {
@@ -16,7 +27,7 @@ const MatchedCountries = ({length, countries, countryInfo}) => {
                         {country}
                         <button key={`${country}-button`} onClick={() => setIndex(countries.indexOf(country))}>show</button>
                     </li>
-                    )
+        )
         })
         return (
             <>
@@ -35,11 +46,6 @@ const MatchedCountries = ({length, countries, countryInfo}) => {
         const languages3 = languages2.map(l => <li key={l}>{l}</li>)
         const flagURL = pais.flags.png
         console.log(flagURL)
-        axios
-        .get(`https://api.openweathermap.org/data/2.5/weather?q=${pais.capital[0]}&appid=178d5001f43d404b2b8fae03d977b820`)
-        .then((e) => {
-            console.log(e.data.main.temp)
-            const temp = e.data.main.temp /* no me renderiza aun los datos cuando le doy click a show */
             return(
                 <>
                 <h1>{pais.name.common}</h1>
@@ -51,12 +57,11 @@ const MatchedCountries = ({length, countries, countryInfo}) => {
                 </ul>
                 <img src={flagURL}></img> 
                 <h2>Weather in {pais.capital[0]}</h2>
-                <p>Temperature: </p>
+                <p>Temperature: ${temp !== null ?  `${temp} C` : "loading"}</p>
                 </>
             )  
-        })
-
+        }
     }   
-}
+
 
 export default MatchedCountries
